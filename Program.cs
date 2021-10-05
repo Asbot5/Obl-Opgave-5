@@ -19,7 +19,7 @@ namespace FootballPlayerServer1
             new FootballPlayer {Id = _nextId++, Name = "Peter", Price = 10000, ShirtNumber = 20},
             new FootballPlayer {Id = _nextId++, Name = "Børge", Price = 20, ShirtNumber = 30},
         };
-        //{"name":"Niklas","Price":50,"ShirtNumber":35}
+
         static void Main(string[] args)
         {
             Console.WriteLine("Fodbold client");
@@ -27,9 +27,6 @@ namespace FootballPlayerServer1
             listener.Start();
             while (true)
             {
-                //TcpClient socket = listener.AcceptTcpClient();
-                //Console.WriteLine("New Client");
-
                 Task.Run(() => HandleClient(listener));
             }
         }
@@ -38,9 +35,6 @@ namespace FootballPlayerServer1
         {
             TcpClient socket = listener.AcceptTcpClient();
             Console.WriteLine("Ny client!");
-            //Console.WriteLine("Skriv 'hentalle' for at vise alle spillere");
-            //Console.WriteLine("Skriv 'hentid' for at vise en specifik spiller");
-            //Console.WriteLine("Skriv 'gem' for at gemme en ny spiller");
             NetworkStream ns = socket.GetStream();
             StreamReader reader = new StreamReader(ns);
             StreamWriter writer = new StreamWriter(ns);
@@ -98,8 +92,6 @@ namespace FootballPlayerServer1
             foreach (FootballPlayer p in players)
             {
                 player = player + JsonSerializer.Serialize(p) + "\n";
-
-                //player = player + "ID: " + p.Id + ", Navn: " + p.Name + ", Pris: " + p.Price + ", Trøje nummer: " + p.ShirtNumber + "\n";
             }
             return player;
         }
